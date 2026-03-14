@@ -3,6 +3,7 @@ package com.example.agent_task;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
@@ -22,7 +23,8 @@ public class TaskController {
     // Einzelnen Task
     @GetMapping("/{id}")
     public Task getById(@PathVariable Long id) {
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
     }
 
     // Task erstellen
@@ -40,7 +42,9 @@ public class TaskController {
     // Task als erledigt markieren
     @PutMapping("/{id}/complete")
     public Task complete(@PathVariable Long id) {
-        Task task = repository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
+        Task task = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
         task.setCompleted(true);
         return repository.save(task);
     }
