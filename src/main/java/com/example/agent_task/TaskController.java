@@ -48,4 +48,27 @@ public class TaskController {
         task.setCompleted(true);
         return repository.save(task);
     }
+
+    @PutMapping("/{id}")
+    public Task update(@PathVariable Long id, @RequestBody Task updatedTask) {
+        Task task = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        task.setTitle(updatedTask.getTitle());
+        task.setDescription(updatedTask.getDescription());
+        task.setCompleted(updatedTask.isCompleted());
+        task.setDeadline(updatedTask.getDeadline());  // ← Diese Zeile hinzufügen!
+
+        return repository.save(task);
+    }
+
+    // Task als NICHT erledigt markieren
+    @PutMapping("/{id}/uncomplete")
+    public Task uncomplete(@PathVariable Long id) {
+        Task task = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        task.setCompleted(false);
+        return repository.save(task);
+    }
 }

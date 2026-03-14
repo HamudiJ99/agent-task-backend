@@ -2,6 +2,7 @@ package com.example.agent_task;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,4 +21,6 @@ public class Task {
     private boolean completed = false;
 
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    private LocalDate deadline;
 }
